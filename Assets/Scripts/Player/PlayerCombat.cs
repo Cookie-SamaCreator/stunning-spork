@@ -5,11 +5,17 @@ using UnityEngine;
 
 namespace RPG.Player
 {
+    /// <summary>
+    /// Handles all player combat logic, including melee, ranged, and magic attacks.
+    /// </summary>
     public class PlayerCombat : MonoBehaviour
     {
         [Header("References")]
+        [Tooltip("Where projectiles and effects are spawned from.")]
         public Transform firePoint;
+        [Tooltip("Handles equipment logic.")]
         public EquipmentManager equipmentManager;
+        [Tooltip("Player stats (HP, MP, etc).")]
         public PlayerStats stats;
 
         /// <summary>
@@ -25,34 +31,37 @@ namespace RPG.Player
                 weapon.physicalDamage,
                 weapon.elementType,
                 weapon.elementalDamage,
+                weapon.damageZonePrefab,
                 gameObject
             );
 
             switch (weapon.weaponType)
             {
                 case WeaponType.Melee:
-                    PerformMeleeAttack(dmg);
+                    PerformAttackZone(dmg);
                     break;
                 case WeaponType.Ranged:
                     PerformRangedAttack(weapon, dmg);
                     break;
                 case WeaponType.Magic:
-                    PerformMagicAttack(weapon);
+                    PerformMagicAttack(weapon, dmg);
                     break;
             }
         }
 
         /// <summary>
-        /// Performs a melee attack using a raycast.
+        /// Spawns a damage zone at the weapon's position (used for melee and magic).
         /// </summary>
-        private void PerformMeleeAttack(DamageData dmg)
+        private void PerformAttackZone(DamageData dmg)
         {
+            if (dmg.damageZone == null) return;
             Transform weaponTransform = PlayerController.Instance.GetWeaponCollider();
-            //TODO rework Melee combat to spawn a slash Collider
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, firePoint.right, 1.5f);
-            if (hit.collider && hit.collider.TryGetComponent(out DamageController dc))
+
+            GameObject zone = Instantiate(dmg.damageZone, weaponTransform.position, weaponTransform.rotation);
+
+            if (zone.TryGetComponent(out DamageAOE damageZone))
             {
-                dc.ApplyDamage(dmg);
+                damageZone.Init(dmg, gameObject);
             }
         }
 
@@ -63,6 +72,7 @@ namespace RPG.Player
         {
             if (weapon.projectilePrefab == null) return;
             GameObject proj = Instantiate(weapon.projectilePrefab, firePoint.position, firePoint.rotation);
+
             if (proj.TryGetComponent(out Projectile projectile))
             {
                 projectile.Init(dmg);
@@ -70,11 +80,16 @@ namespace RPG.Player
         }
 
         /// <summary>
-        /// Deducts mana for magic attacks.
+        /// Deducts mana and performs a magic attack by spawning a damage zone.
         /// </summary>
-        private void PerformMagicAttack(Weapon weapon)
+        private void PerformMagicAttack(Weapon weapon, DamageData dmg)
         {
-            stats.ModifyStat("MP", -weapon.manaCost);
+            if (dmg.damageZone == null) return;
+
+            // Deduct mana, abort if not enough
+            if (!stats.ModifyStat("MP", -weapon.manaCost)) return;
+
+            PerformAttackZone(dmg);
         }
     }
 }

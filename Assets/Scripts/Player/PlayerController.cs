@@ -71,6 +71,11 @@ public class PlayerController : Singleton<PlayerController>
     {
         return weaponCollider;
     }
+
+    public void HealPlayer(int healingValue)
+    {
+        damageController.Heal(healingValue);
+    }
     private void PlayerInput()
     {
         movement = playerControls.Movement.Move.ReadValue<Vector2>();

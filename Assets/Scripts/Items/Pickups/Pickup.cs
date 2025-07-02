@@ -36,7 +36,7 @@ public class Pickup : MonoBehaviour
         StartCoroutine(AnimCurveSpawnRoutine());
     }
 
-    /*private void Update()
+    private void Update()
     {
         Vector3 playerPos = PlayerController.Instance.transform.position;
 
@@ -50,12 +50,12 @@ public class Pickup : MonoBehaviour
             moveDir = Vector3.zero;
             moveSpeed = 0f;
         }
-    }*/
+    }
 
-    /*private void FixedUpdate()
+    private void FixedUpdate()
     {
         rb.linearVelocity = moveSpeed * Time.deltaTime * moveDir;
-    }*/
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -94,10 +94,10 @@ public class Pickup : MonoBehaviour
                 //EconomyManager.Instance.AddGold(goldValue);
                 break;
             case PickUpType.StaminaGlobe:
-                //Stamina.Instance.AddStamina(staminaValue);
+                Stamina.Instance.AddStamina(staminaValue);
                 break;
             case PickUpType.HealthGlobe:
-                //PlayerHealth.Instance.HealPlayer(healingValue);
+                PlayerController.Instance.HealPlayer(healingValue);
                 break;
             default:
                 break;

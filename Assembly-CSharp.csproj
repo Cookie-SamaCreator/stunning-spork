@@ -67,27 +67,31 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Player\Player Controls.cs" />
     <Compile Include="Assets\Scripts\Equipment\Base\Equipment.cs" />
+    <Compile Include="Assets\Scripts\Definitions\DamageData.cs" />
     <Compile Include="Assets\Scripts\Definitions\EquipmentSlot.cs" />
     <Compile Include="Assets\Scripts\Items\Pickups\Pickup.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerCombat.cs" />
-    <Compile Include="Assets\Scripts\Combat\Melee\MeleeAttack.cs" />
     <Compile Include="Assets\Scripts\Equipment\Accessory\Accessory.cs" />
     <Compile Include="Assets\Scripts\Misc\Flash.cs" />
     <Compile Include="Assets\Scripts\UI\StatDisplayUI.cs" />
     <Compile Include="Assets\Scripts\Combat\Projectiles\Projectile.cs" />
     <Compile Include="Assets\Scripts\Items\Pickups\PickupSpawner.cs" />
     <Compile Include="Assets\Scripts\Definitions\ElementType.cs" />
+    <Compile Include="Assets\Scripts\Combat\Damage\DamageAOE.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Equipment\Armor\Armor.cs" />
     <Compile Include="Assets\Scripts\Combat\Damage\DamageController.cs" />
     <Compile Include="Assets\Scripts\Systems\Singleton.cs" />
+    <Compile Include="Assets\Scripts\Misc\SelfDestroy.cs" />
+    <Compile Include="Assets\Scripts\Misc\Indestructible.cs" />
     <Compile Include="Assets\Scripts\Misc\Knockback.cs" />
     <Compile Include="Assets\Scripts\Definitions\WeaponType.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
+    <Compile Include="Assets\Scripts\Misc\Destrucible.cs" />
     <Compile Include="Assets\Scripts\Equipment\Weapons\Weapon.cs" />
     <Compile Include="Assets\Scripts\Player\Stamina.cs" />
     <Compile Include="Assets\Scripts\Systems\EquipmentManager.cs" />
-    <Compile Include="Assets\Scripts\Combat\Damage\DamageData.cs" />
+    <Compile Include="Assets\Scripts\Combat\Damage\DamageZone.cs" />
     <Compile Include="Assets\Scripts\Definitions\StatModifier.cs" />
     <Compile Include="Assets\Scripts\Player\FirePointFollower.cs" />
   </ItemGroup>
