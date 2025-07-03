@@ -8,16 +8,18 @@ namespace RPG.Player
     /// <summary>
     /// Handles all player combat logic, including melee, ranged, and magic attacks.
     /// </summary>
-    public class PlayerCombat : MonoBehaviour
+    public class PlayerCombat : Singleton<PlayerCombat>
     {
-        [Header("References")]
-        [Tooltip("Where projectiles and effects are spawned from.")]
-        public Transform firePoint;
-        [Tooltip("Handles equipment logic.")]
-        public EquipmentManager equipmentManager;
-        [Tooltip("Player stats (HP, MP, etc).")]
-        public PlayerStats stats;
+        private EquipmentManager equipmentManager;
+        private PlayerStats stats;
 
+        protected override void Awake()
+        {
+            base.Awake();
+            equipmentManager = GetComponent<EquipmentManager>();
+            stats = GetComponent<PlayerStats>();
+        }
+        
         /// <summary>
         /// Handles the player's attack logic based on equipped weapon type.
         /// </summary>
@@ -32,7 +34,8 @@ namespace RPG.Player
                 weapon.elementType,
                 weapon.elementalDamage,
                 weapon.damageZonePrefab,
-                gameObject
+                gameObject,
+                weapon.ignoreOwner
             );
 
             switch (weapon.weaponType)
@@ -52,16 +55,23 @@ namespace RPG.Player
         /// <summary>
         /// Spawns a damage zone at the weapon's position (used for melee and magic).
         /// </summary>
-        private void PerformAttackZone(DamageData dmg)
+        private void PerformAttackZone(DamageData dmg, Transform attackLocation = null)
         {
             if (dmg.damageZone == null) return;
-            Transform weaponTransform = PlayerController.Instance.GetWeaponCollider();
-
-            GameObject zone = Instantiate(dmg.damageZone, weaponTransform.position, weaponTransform.rotation);
-
-            if (zone.TryGetComponent(out DamageAOE damageZone))
+            if (attackLocation == null)
             {
-                damageZone.Init(dmg, gameObject);
+                attackLocation = PlayerController.Instance.GetAttackSpawnPoint();
+            }
+
+            GameObject zone = Instantiate(dmg.damageZone, attackLocation.position, Quaternion.identity);
+
+            if (zone.TryGetComponent(out DamageAOE damageAOE))
+            {
+                damageAOE.Init(dmg, gameObject);
+            }
+            else
+            {
+                zone.GetComponent<DamageZone>().Init(dmg, gameObject);
             }
         }
 
@@ -71,7 +81,9 @@ namespace RPG.Player
         private void PerformRangedAttack(Weapon weapon, DamageData dmg)
         {
             if (weapon.projectilePrefab == null) return;
-            GameObject proj = Instantiate(weapon.projectilePrefab, firePoint.position, firePoint.rotation);
+
+            Transform projectileSpawnPoint = PlayerController.Instance.GetAttackSpawnPoint();
+            GameObject proj = Instantiate(weapon.projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
 
             if (proj.TryGetComponent(out Projectile projectile))
             {
@@ -80,16 +92,44 @@ namespace RPG.Player
         }
 
         /// <summary>
-        /// Deducts mana and performs a magic attack by spawning a damage zone.
+        /// Deducts mana and performs a magic attack by spawning a damage zone at the mouse position.
         /// </summary>
         private void PerformMagicAttack(Weapon weapon, DamageData dmg)
         {
+            // Abort if no damage zone prefab is set
             if (dmg.damageZone == null) return;
 
-            // Deduct mana, abort if not enough
+            // Try to deduct mana; abort if not enough
             if (!stats.ModifyStat("MP", -weapon.manaCost)) return;
 
-            PerformAttackZone(dmg);
+            // Get mouse position in world space (on XY plane)
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mouseWorldPos.z = 0f;
+
+            // Use a temporary GameObject to provide a Transform at the mouse position
+            using var temp = new TempTransform(mouseWorldPos);
+            PerformAttackZone(dmg, temp.Transform);
+        }
+
+        /// <summary>
+        /// Utility class for creating and automatically destroying a temporary Transform.
+        /// </summary>
+        private class TempTransform : System.IDisposable
+        {
+            public Transform Transform { get; }
+            private readonly GameObject _gameObject;
+
+            public TempTransform(Vector3 position)
+            {
+                _gameObject = new GameObject("MagicAttackTarget");
+                _gameObject.transform.position = position;
+                Transform = _gameObject.transform;
+            }
+
+            public void Dispose()
+            {
+                Object.Destroy(_gameObject);
+            }
         }
     }
 }

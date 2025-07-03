@@ -10,11 +10,11 @@ public class DamageZone : MonoBehaviour
     private DamageData damageData;
     private GameObject owner;
     bool ignoreOwner = false;
-    public virtual void Init(DamageData dmg, GameObject owner, bool ignoreOwner = false)
+    public virtual void Init(DamageData dmg, GameObject owner)
     {
         this.damageData = dmg;
         this.owner = owner;
-        this.ignoreOwner = ignoreOwner;
+        this.ignoreOwner = dmg.ignoreOwner;
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

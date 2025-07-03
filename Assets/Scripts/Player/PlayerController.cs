@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using RPG.Combat;
+using RPG.Systems;
 
 public class PlayerController : Singleton<PlayerController>
 {
@@ -9,7 +10,7 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] private float dashDuration = 0.2f; // Duration of the dash effect
     [SerializeField] private float dashCooldown = 0.25f; // Cooldown time for dashing
     [SerializeField] private TrailRenderer trailRenderer; // Optional: Trail renderer for dash effect
-    [SerializeField] private Transform weaponCollider;
+    [SerializeField] private Transform attackSpawnPoint; // Point where to spawn the "damage object" (projectile, collider, etc...)
 
     private PlayerControls playerControls;
     private Vector2 movement;
@@ -67,15 +68,16 @@ public class PlayerController : Singleton<PlayerController>
         AdjustPlayerFacingDirection();
     }
 
-    public Transform GetWeaponCollider()
+    public Transform GetAttackSpawnPoint()
     {
-        return weaponCollider;
+        return attackSpawnPoint;
     }
 
     public void HealPlayer(int healingValue)
     {
         damageController.Heal(healingValue);
     }
+
     private void PlayerInput()
     {
         movement = playerControls.Movement.Move.ReadValue<Vector2>();

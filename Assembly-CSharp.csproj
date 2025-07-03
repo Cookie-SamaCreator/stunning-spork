@@ -66,14 +66,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Player\Player Controls.cs" />
+    <Compile Include="Assets\Scripts\Equipment\Weapons\SlashAnim.cs" />
+    <Compile Include="Assets\Scripts\Player\ActiveWeapon.cs" />
+    <Compile Include="Assets\Scripts\Misc\EconomyManager.cs" />
     <Compile Include="Assets\Scripts\Equipment\Base\Equipment.cs" />
     <Compile Include="Assets\Scripts\Definitions\DamageData.cs" />
     <Compile Include="Assets\Scripts\Definitions\EquipmentSlot.cs" />
     <Compile Include="Assets\Scripts\Items\Pickups\Pickup.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerCombat.cs" />
+    <Compile Include="Assets\Scripts\Equipment\Weapons\MeleeWeapon.cs" />
     <Compile Include="Assets\Scripts\Equipment\Accessory\Accessory.cs" />
     <Compile Include="Assets\Scripts\Misc\Flash.cs" />
     <Compile Include="Assets\Scripts\UI\StatDisplayUI.cs" />
+    <Compile Include="Assets\Scripts\Misc\CursorManager.cs" />
     <Compile Include="Assets\Scripts\Combat\Projectiles\Projectile.cs" />
     <Compile Include="Assets\Scripts\Items\Pickups\PickupSpawner.cs" />
     <Compile Include="Assets\Scripts\Definitions\ElementType.cs" />
@@ -93,7 +98,6 @@
     <Compile Include="Assets\Scripts\Systems\EquipmentManager.cs" />
     <Compile Include="Assets\Scripts\Combat\Damage\DamageZone.cs" />
     <Compile Include="Assets\Scripts\Definitions\StatModifier.cs" />
-    <Compile Include="Assets\Scripts\Player\FirePointFollower.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

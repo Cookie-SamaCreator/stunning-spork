@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b844129a24e2a57498ea8735f033caa1, type: 3}
+  m_Name: BasicSword
+  m_EditorClassIdentifier: 
+  EquipmentName: BasicSword
+  statModifiers: []
+  weaponType: 0
+  physicalDamage: 10
+  elementType: 0
+  elementalDamage: 0
+  attackRate: 0.5
+  manaCost: 0
+  ignoreOwner: 1
+  projectilePrefab: {fileID: 0}
+  damageZonePrefab: {fileID: 9172603416210118633, guid: 87252a7480924c341a7864233b5fa891, type: 3}

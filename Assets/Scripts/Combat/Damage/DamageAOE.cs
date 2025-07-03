@@ -8,9 +8,9 @@ public class DamageAOE : DamageZone
 {
     [SerializeField] private float lifeTime = 0.2f;
 
-    public override void Init(DamageData dmg, GameObject owner, bool ignoreOwner = false)
+    public override void Init(DamageData dmg, GameObject owner)
     {
-        base.Init(dmg, owner, ignoreOwner);
+        base.Init(dmg, owner);
         Destroy(gameObject, lifeTime);
     }
 }
