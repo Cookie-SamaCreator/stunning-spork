@@ -11,6 +11,7 @@ public class Weapon : Equipment
     public float attackRate = 1f;
     public int manaCost = 0;
     public bool ignoreOwner = true;
+    public float weaponRange = 0;
 
     [Header("Projectile (Ranged only)")]
     public GameObject projectilePrefab;

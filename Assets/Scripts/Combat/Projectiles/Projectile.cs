@@ -6,8 +6,7 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 22f;
     [SerializeField] private GameObject particleOnHitPrefabVFX;
-    //TODO Determine if this is needed
-    //[SerializeField] private bool isEnemyProjectile = false;
+    [SerializeField] private bool isEnemyProjectile = false;
     [SerializeField] private float projectileRange = 10f;
     private DamageData damage;
     private Vector3 startPosition;

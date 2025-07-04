@@ -1,14 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
-public class MeleeWeapon : MonoBehaviour
+public class MeleeWeapon : MonoBehaviour, IWeapon
 {
-
     [SerializeField] private GameObject slashAnimationPrefab;
     private Transform slashSpawnPoint;
     [SerializeField] private Weapon weaponSO;
     Transform attackSpawnPoint;
-
     private Animator animator;
     private GameObject slashAnimation;
 
