@@ -10,8 +10,8 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] private float dashDuration = 0.2f; // Duration of the dash effect
     [SerializeField] private float dashCooldown = 0.25f; // Cooldown time for dashing
     [SerializeField] private TrailRenderer trailRenderer; // Optional: Trail renderer for dash effect
-    [SerializeField] private Transform attackSpawnPoint; // Point where to spawn the "damage object" (projectile, collider, etc...)
-
+    [SerializeField] private Transform attackSpawnPoint; // Point where we spawn the actual attack
+    [SerializeField] private Transform attackAnimSpawnPoint; // Point where we spawn the animation
     private PlayerControls playerControls;
     private Vector2 movement;
     private Rigidbody2D rb;
@@ -71,6 +71,11 @@ public class PlayerController : Singleton<PlayerController>
     public Transform GetAttackSpawnPoint()
     {
         return attackSpawnPoint;
+    }
+
+    public Transform GetAttackAnimSpawnPoint()
+    {
+        return attackAnimSpawnPoint;
     }
 
     public void HealPlayer(int healingValue)

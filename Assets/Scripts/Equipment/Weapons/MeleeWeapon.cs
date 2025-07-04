@@ -5,9 +5,9 @@ public class MeleeWeapon : MonoBehaviour
 {
 
     [SerializeField] private GameObject slashAnimationPrefab;
-    [SerializeField] private Transform slashSpawnPoint;
+    private Transform slashSpawnPoint;
     [SerializeField] private Weapon weaponSO;
-    //Transform weaponCollider;
+    Transform attackSpawnPoint;
 
     private Animator animator;
     private GameObject slashAnimation;
@@ -19,12 +19,13 @@ public class MeleeWeapon : MonoBehaviour
 
     private void Start()
     {
-        //weaponCollider = PlayerController.Instance.GetAttackSpawnPoint();
-        // éviter d'uliser Find et plutot utiliser comme pour weaponCollider
+        attackSpawnPoint = PlayerController.Instance.GetAttackSpawnPoint();
+        // éviter d'utiliser Find et plutot utiliser comme pour weaponCollider
         // string reference c'est pas top
-        //slashSpawnPoint = PlayerController.Instance.GetAttackSpawnPoint();
-        slashSpawnPoint = GameObject.Find("SlashAnimationSpawnPoint").transform;
+        slashSpawnPoint = PlayerController.Instance.GetAttackAnimSpawnPoint();
+        //slashSpawnPoint = GameObject.Find("SlashAnimationSpawnPoint").transform;
     }
+
     private void Update()
     {
         MouseFollowWithOffset();
@@ -38,15 +39,9 @@ public class MeleeWeapon : MonoBehaviour
     public void Attack()
     {
         animator.SetTrigger("Attack");
-        //weaponCollider.gameObject.SetActive(true);
         slashAnimation = Instantiate(slashAnimationPrefab, slashSpawnPoint.position, Quaternion.identity);
         slashAnimation.transform.parent = this.transform.parent;
     }
-
-    //public void DoneAttackingAnim()
-    //{
-    //    weaponCollider.gameObject.SetActive(false);
-    //}
 
     public void SwingUpFlipAnim()
     {
@@ -67,21 +62,33 @@ public class MeleeWeapon : MonoBehaviour
             slashAnimation.GetComponent<SpriteRenderer>().flipX = true;
         }
     }
+    
     private void MouseFollowWithOffset()
     {
         Vector3 mousePos = Input.mousePosition;
         Vector3 playerScreenPoint = Camera.main.WorldToScreenPoint(PlayerController.Instance.transform.position);
         Vector3 playerPosition = PlayerController.Instance.transform.position;
+
         float angle = Mathf.Atan2(mousePos.y - playerPosition.y, Mathf.Abs(mousePos.x - playerPosition.x)) * Mathf.Rad2Deg;
-        if (mousePos.x < playerScreenPoint.x)
+        bool isLeft = mousePos.x < playerScreenPoint.x;
+
+        float x = Mathf.Abs(attackSpawnPoint.localPosition.x);
+        Vector3 newPos = attackSpawnPoint.localPosition;
+        Quaternion newRot;
+
+        if (isLeft)
         {
             ActiveWeapon.Instance.transform.rotation = Quaternion.Euler(0, -180, angle);
-            //weaponCollider.transform.rotation = Quaternion.Euler(0, -180, 0);
+            newPos.x = -x;
+            newRot = Quaternion.Euler(0, -180, 0);
         }
         else
         {
             ActiveWeapon.Instance.transform.rotation = Quaternion.Euler(0, 0, angle);
-            //weaponCollider.transform.rotation = Quaternion.Euler(0, 0, 0);
+            newPos.x = x;
+            newRot = Quaternion.Euler(0, 0, 0);
         }
+
+        attackSpawnPoint.SetLocalPositionAndRotation(newPos, newRot);
     }
 }

@@ -52,6 +52,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
     public void NewWeapon(Weapon newWeapon)
     {
         CurrentActiveWeapon = newWeapon;
+        EquipmentManager.Instance.UpdateWeapon(newWeapon);
         AttackCooldown();
         timeBetweenAttacks = CurrentActiveWeapon.attackRate;
     }
@@ -95,5 +96,6 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
     public void WeaponNull()
     {
         CurrentActiveWeapon = null;
+        EquipmentManager.Instance.Unequip(RPG.Definitions.EquipmentSlot.Weapon);
     }
 }

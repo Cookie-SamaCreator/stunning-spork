@@ -775,7 +775,7 @@ GameObject:
   m_Component:
   - component: {fileID: 495927628}
   m_Layer: 0
-  m_Name: SlashAnimationSpawnPoint
+  m_Name: AttackAnimationSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -877,6 +877,7 @@ MonoBehaviour:
   dashCooldown: 0.25
   trailRenderer: {fileID: 1719908605}
   attackSpawnPoint: {fileID: 1055563936}
+  attackAnimSpawnPoint: {fileID: 495927628}
 --- !u!114 &520763581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2767,7 +2768,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slashAnimationPrefab: {fileID: 8012195468822408235, guid: 43556d04846d0c44493e3420769cb102, type: 3}
-  slashSpawnPoint: {fileID: 495927628}
   weaponSO: {fileID: 11400000, guid: 499faebfba8947242a47b818dc382a6b, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

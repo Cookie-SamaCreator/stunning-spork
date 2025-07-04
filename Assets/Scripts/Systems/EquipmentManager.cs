@@ -4,15 +4,16 @@ using RPG.Definitions;
 
 namespace RPG.Systems
 {
-    public class EquipmentManager : MonoBehaviour
+    public class EquipmentManager : Singleton<EquipmentManager>
     {
         [Header("Current Equipment")]
         private Dictionary<EquipmentSlot, Equipment> equippedItems = new();
         private ActiveWeapon activeWeapon;
         private PlayerStats stats;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             stats = GetComponent<PlayerStats>();
             activeWeapon = GetComponentInChildren<ActiveWeapon>();
             equippedItems.Clear();
@@ -20,6 +21,11 @@ namespace RPG.Systems
             {
                 equippedItems[slot] = null;
             }
+        }
+
+        public void UpdateWeapon(Weapon newWeapon)
+        {
+            Equip(newWeapon, EquipmentSlot.Weapon);
         }
 
         /// <summary>
@@ -54,10 +60,10 @@ namespace RPG.Systems
             equippedItems[slot] = equipment;
             equipment.Equip(stats);
 
-            if (slot == EquipmentSlot.Weapon && activeWeapon != null)
+            /*if (slot == EquipmentSlot.Weapon && activeWeapon != null)
             {
                 activeWeapon.NewWeapon(equipment as Weapon);
-            }
+            }*/
 
             Debug.Log($"Equipped {equipment.EquipmentName} in {slot}.");
         }
@@ -72,10 +78,10 @@ namespace RPG.Systems
                 equipment.Unequip(stats);
                 equippedItems[slot] = null;
 
-                if (slot == EquipmentSlot.Weapon && activeWeapon != null)
+                /*if (slot == EquipmentSlot.Weapon && activeWeapon != null)
                 {
                     activeWeapon.WeaponNull();
-                }
+                }*/
 
                 Debug.Log($"Unequipped {slot}.");
             }

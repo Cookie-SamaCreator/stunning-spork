@@ -25,9 +25,8 @@ namespace RPG.Player
         /// </summary>
         public void Attack()
         {
-            // Get the equipped weapon, return if none
+            // Get the equipped weapon, return if none 
             if (equipmentManager.GetEquipped(EquipmentSlot.Weapon) is not Weapon weapon) return;
-
             // Prepare damage data
             var dmg = new DamageData(
                 weapon.physicalDamage,
@@ -62,17 +61,8 @@ namespace RPG.Player
             {
                 attackLocation = PlayerController.Instance.GetAttackSpawnPoint();
             }
-
-            GameObject zone = Instantiate(dmg.damageZone, attackLocation.position, Quaternion.identity);
-
-            if (zone.TryGetComponent(out DamageAOE damageAOE))
-            {
-                damageAOE.Init(dmg, gameObject);
-            }
-            else
-            {
-                zone.GetComponent<DamageZone>().Init(dmg, gameObject);
-            }
+            GameObject zone = Instantiate(dmg.damageZone, attackLocation.position, attackLocation.rotation);
+            zone.GetComponent<DamageZone>().Init(dmg, this.gameObject);
         }
 
         /// <summary>
@@ -94,7 +84,7 @@ namespace RPG.Player
         /// <summary>
         /// Deducts mana and performs a magic attack by spawning a damage zone at the mouse position.
         /// </summary>
-        private void PerformMagicAttack(Weapon weapon, DamageData dmg)
+        private void PerformMagicAttack(Weapon weapon, DamageData dmg) // TODO Test this
         {
             // Abort if no damage zone prefab is set
             if (dmg.damageZone == null) return;
@@ -109,27 +99,6 @@ namespace RPG.Player
             // Use a temporary GameObject to provide a Transform at the mouse position
             using var temp = new TempTransform(mouseWorldPos);
             PerformAttackZone(dmg, temp.Transform);
-        }
-
-        /// <summary>
-        /// Utility class for creating and automatically destroying a temporary Transform.
-        /// </summary>
-        private class TempTransform : System.IDisposable
-        {
-            public Transform Transform { get; }
-            private readonly GameObject _gameObject;
-
-            public TempTransform(Vector3 position)
-            {
-                _gameObject = new GameObject("MagicAttackTarget");
-                _gameObject.transform.position = position;
-                Transform = _gameObject.transform;
-            }
-
-            public void Dispose()
-            {
-                Object.Destroy(_gameObject);
-            }
         }
     }
 }

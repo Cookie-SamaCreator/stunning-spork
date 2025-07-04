@@ -82,7 +82,6 @@
     <Compile Include="Assets\Scripts\Combat\Projectiles\Projectile.cs" />
     <Compile Include="Assets\Scripts\Items\Pickups\PickupSpawner.cs" />
     <Compile Include="Assets\Scripts\Definitions\ElementType.cs" />
-    <Compile Include="Assets\Scripts\Combat\Damage\DamageAOE.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Equipment\Armor\Armor.cs" />
     <Compile Include="Assets\Scripts\Combat\Damage\DamageController.cs" />
@@ -96,6 +95,7 @@
     <Compile Include="Assets\Scripts\Equipment\Weapons\Weapon.cs" />
     <Compile Include="Assets\Scripts\Player\Stamina.cs" />
     <Compile Include="Assets\Scripts\Systems\EquipmentManager.cs" />
+    <Compile Include="Assets\Scripts\Misc\TempTransform.cs" />
     <Compile Include="Assets\Scripts\Combat\Damage\DamageZone.cs" />
     <Compile Include="Assets\Scripts\Definitions\StatModifier.cs" />
   </ItemGroup>
