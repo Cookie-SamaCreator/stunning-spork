@@ -4,9 +4,9 @@ using UnityEngine;
 public class MeleeWeapon : MonoBehaviour, IWeapon
 {
     [SerializeField] private GameObject slashAnimationPrefab;
-    private Transform slashSpawnPoint;
     [SerializeField] private Weapon weaponSO;
-    Transform attackSpawnPoint;
+    private Transform attackSpawnPoint;
+    private Transform slashSpawnPoint;
     private Animator animator;
     private GameObject slashAnimation;
 
@@ -18,10 +18,7 @@ public class MeleeWeapon : MonoBehaviour, IWeapon
     private void Start()
     {
         attackSpawnPoint = PlayerController.Instance.GetAttackSpawnPoint();
-        // éviter d'utiliser Find et plutot utiliser comme pour weaponCollider
-        // string reference c'est pas top
         slashSpawnPoint = PlayerController.Instance.GetAttackAnimSpawnPoint();
-        //slashSpawnPoint = GameObject.Find("SlashAnimationSpawnPoint").transform;
     }
 
     private void Update()
@@ -43,7 +40,7 @@ public class MeleeWeapon : MonoBehaviour, IWeapon
 
     public void SwingUpFlipAnim()
     {
-        slashAnimation.gameObject.transform.rotation = Quaternion.Euler(-180, 0, 0);
+        slashAnimation.transform.rotation = Quaternion.Euler(-180, 0, 0);
 
         if (PlayerController.Instance.FacingLeft)
         {
@@ -53,7 +50,7 @@ public class MeleeWeapon : MonoBehaviour, IWeapon
 
     public void SwingDownFlipAnim()
     {
-        slashAnimation.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+        slashAnimation.transform.rotation = Quaternion.Euler(0, 0, 0);
 
         if (PlayerController.Instance.FacingLeft)
         {

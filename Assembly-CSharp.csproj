@@ -92,6 +92,7 @@
     <Compile Include="Assets\Scripts\Misc\Knockback.cs" />
     <Compile Include="Assets\Scripts\Definitions\WeaponType.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerStats.cs" />
+    <Compile Include="Assets\Scripts\Misc\MouseFollow.cs" />
     <Compile Include="Assets\Scripts\Misc\Destrucible.cs" />
     <Compile Include="Assets\Scripts\Equipment\Weapons\Weapon.cs" />
     <Compile Include="Assets\Scripts\Player\Stamina.cs" />

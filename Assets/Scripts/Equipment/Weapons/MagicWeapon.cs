@@ -29,13 +29,17 @@ public class MagicWeapon : MonoBehaviour, IWeapon
     {
         return weaponSO;
     }
+    
     private void MouseFollowWithOffset()
     {
         Vector3 mousePos = Input.mousePosition;
         Vector3 playerScreenPoint = Camera.main.WorldToScreenPoint(PlayerController.Instance.transform.position);
         Vector3 playerPosition = PlayerController.Instance.transform.position;
+
         float angle = Mathf.Atan2(mousePos.y - playerPosition.y, Mathf.Abs(mousePos.x - playerPosition.x)) * Mathf.Rad2Deg;
-        if (mousePos.x < playerScreenPoint.x)
+        bool isLeft = mousePos.x < playerScreenPoint.x;
+
+        if (isLeft)
         {
             ActiveWeapon.Instance.transform.rotation = Quaternion.Euler(0, -180, angle);
         }
@@ -43,5 +47,6 @@ public class MagicWeapon : MonoBehaviour, IWeapon
         {
             ActiveWeapon.Instance.transform.rotation = Quaternion.Euler(0, 0, angle);
         }
+
     }
 }

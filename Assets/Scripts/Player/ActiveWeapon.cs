@@ -10,6 +10,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
 {
     public Weapon CurrentActiveWeapon { get; private set; }
     private PlayerControls playerControls;
+    private MouseFollow mouseFollow;
     private float timeBetweenAttacks;
     private bool attackButtonDown, isAttacking = false;
 
@@ -17,6 +18,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
     {
         base.Awake();
         playerControls = new PlayerControls();
+        mouseFollow = GetComponent<MouseFollow>();
     }
 
     private void OnEnable()
@@ -53,6 +55,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
         EquipmentManager.Instance.UpdateWeapon(newWeapon);
         AttackCooldown();
         timeBetweenAttacks = CurrentActiveWeapon.attackRate;
+        mouseFollow.enabled = CurrentActiveWeapon.weaponType == RPG.Definitions.WeaponType.Ranged;
     }
 
     /// <summary>
@@ -120,6 +123,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
     {
         CurrentActiveWeapon = null;
         EquipmentManager.Instance.Unequip(RPG.Definitions.EquipmentSlot.Weapon);
+        mouseFollow.enabled = false;
     }
 
     /// <summary>
