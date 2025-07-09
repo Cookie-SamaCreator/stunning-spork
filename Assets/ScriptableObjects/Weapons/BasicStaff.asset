@@ -15,10 +15,10 @@ MonoBehaviour:
   EquipmentName: 
   statModifiers: []
   weaponType: 2
-  physicalDamage: 0
+  physicalDamage: 3
   elementType: 1
   elementalDamage: 5
-  attackRate: 1
+  attackRate: 2
   manaCost: 2
   ignoreOwner: 1
   weaponRange: 15

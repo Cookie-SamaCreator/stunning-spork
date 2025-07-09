@@ -21,5 +21,6 @@ MonoBehaviour:
   attackRate: 0.5
   manaCost: 0
   ignoreOwner: 1
+  weaponRange: 0
   projectilePrefab: {fileID: 0}
   damageZonePrefab: {fileID: 9172603416210118633, guid: 87252a7480924c341a7864233b5fa891, type: 3}

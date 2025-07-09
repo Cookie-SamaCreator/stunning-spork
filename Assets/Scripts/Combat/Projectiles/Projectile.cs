@@ -5,12 +5,17 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 22f;
-    [SerializeField] private GameObject particleOnHitPrefabVFX;
-    [SerializeField] private bool isEnemyProjectile = false;
-    [SerializeField] private float projectileRange = 10f;
+    [SerializeField] private GameObject particleOnHitPrefabVFX; // TODO Add VFX
+    private bool isEnemyProjectile; // TODO Implement some mechanic about enemy projectiles (to avoid Friendly Fire)
+    private float projectileRange;
     private DamageData damage;
     private Vector3 startPosition;
-    public void Init(DamageData dmg) => damage = dmg;
+    public void Init(DamageData dmg, float range, bool isEnemyProjectile = false)
+    {
+        damage = dmg;
+        projectileRange = range;
+        this.isEnemyProjectile = isEnemyProjectile;
+    }
 
     private void Start()
     {
@@ -40,16 +45,6 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void UpdateProjectileRange(float projectileRange)
-    {
-        this.projectileRange = projectileRange;
-    }
-
-    public void UpdateMoveSpeed(float moveSpeed)
-    {
-        this.moveSpeed = moveSpeed;
-    }
-    
     private void DetectFireDistance()
     {
         if (Vector3.Distance(transform.position, startPosition) > projectileRange)

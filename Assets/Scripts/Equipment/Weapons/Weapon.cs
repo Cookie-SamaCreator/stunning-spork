@@ -40,4 +40,49 @@ public class Weapon : Equipment
             }
         }
     }
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        // Clamp values to avoid negative stats
+        physicalDamage = Mathf.Max(0, physicalDamage);
+        elementalDamage = Mathf.Max(0, elementalDamage);
+        attackRate = Mathf.Max(0.01f, attackRate);
+        manaCost = Mathf.Max(0, manaCost);
+        weaponRange = Mathf.Max(0, weaponRange);
+
+        if (weaponType == WeaponType.Melee || weaponType == WeaponType.Ranged)
+        {
+            manaCost = 0;
+        }
+
+        if (weaponType == WeaponType.Melee)
+        {
+            weaponRange = 0;
+        }
+
+        if (weaponType != WeaponType.Ranged && projectilePrefab != null)
+        {
+            projectilePrefab = null;
+        }
+
+        if (weaponType != WeaponType.Melee && weaponType != WeaponType.Magic && damageZonePrefab != null)
+        {
+            damageZonePrefab = null;
+        }
+
+        // Warn if projectilePrefab is missing for ranged weapons
+        if (weaponType == WeaponType.Ranged && projectilePrefab == null)
+        {
+            Debug.LogWarning($"[Weapon SO: {name}] Ranged weapon without projectilePrefab assigned!", this);
+        }
+
+        // Warn if damageZonePrefab is missing for melee or magic weapons
+        if ((weaponType == WeaponType.Melee || weaponType == WeaponType.Magic) && damageZonePrefab == null)
+        {
+            Debug.LogWarning($"[Weapon SO: {name}] {weaponType} weapon without damageZonePrefab assigned!", this);
+        }
+    }
+#endif
+
 }

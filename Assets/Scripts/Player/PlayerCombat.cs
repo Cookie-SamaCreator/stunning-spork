@@ -71,13 +71,13 @@ namespace RPG.Player
         private void PerformRangedAttack(Weapon weapon, DamageData dmg)
         {
             if (weapon.projectilePrefab == null) return;
-
-            Transform projectileSpawnPoint = PlayerController.Instance.GetAttackSpawnPoint();
-            GameObject proj = Instantiate(weapon.projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
+            RangedWeapon rangedWeapon = ActiveWeapon.Instance.GetComponentInChildren<RangedWeapon>();
+            Transform projectileSpawnPoint = rangedWeapon.GetProjectileSpawnPoint();
+            GameObject proj = Instantiate(weapon.projectilePrefab, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
 
             if (proj.TryGetComponent(out Projectile projectile))
             {
-                projectile.Init(dmg);
+                projectile.Init(dmg, weapon.weaponRange);
             }
         }
 

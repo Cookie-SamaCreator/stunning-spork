@@ -4,11 +4,10 @@ public class RangedWeapon : MonoBehaviour, IWeapon
 {
     //TODO Test this + implement animation and first projectile
     [SerializeField] private Weapon weaponSO;
-    [SerializeField] private GameObject arrowPrefab;
-    [SerializeField] private Transform arrowSpawnPoint;
+    [SerializeField] private Transform projectileSpawnPoint;
 
     private Animator animator;
-    readonly int FIRE_HASH = Animator.StringToHash("Fire"); // Performance enhance
+    readonly int ATTACK_HASH = Animator.StringToHash("Attack"); // Performance enhance
 
     private void Awake()
     {
@@ -16,7 +15,7 @@ public class RangedWeapon : MonoBehaviour, IWeapon
     }
     public void Attack()
     {
-        animator.SetTrigger(FIRE_HASH);
+        animator.SetTrigger(ATTACK_HASH);
         //GameObject newArrow = Instantiate(arrowPrefab, arrowSpawnPoint.position, ActiveWeapon.Instance.transform.rotation);
         //newArrow.GetComponent<Projectile>().UpdateProjectileRange(weaponSO.weaponRange);
     }
@@ -24,5 +23,10 @@ public class RangedWeapon : MonoBehaviour, IWeapon
     public Weapon GetWeaponInfo()
     {
         return weaponSO;
+    }
+
+    public Transform GetProjectileSpawnPoint()
+    {
+        return projectileSpawnPoint;
     }
 }

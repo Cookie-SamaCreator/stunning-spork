@@ -156,5 +156,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponSO: {fileID: 11400000, guid: 9a5c7c126b3b4b248b5726e6f5675be6, type: 2}
-  arrowPrefab: {fileID: 0}
-  arrowSpawnPoint: {fileID: 706753996135914473}
+  projectileSpawnPoint: {fileID: 706753996135914473}
